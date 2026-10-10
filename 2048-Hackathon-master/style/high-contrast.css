@@ -1,0 +1,262 @@
+/*
+ * High contrast mode overrides.
+ * Applied when <body> carries the class "high-contrast".
+ *
+ * Spacing philosophy:
+ *   Every element that gains a border in HC mode also sets box-sizing:border-box
+ *   so the border grows inward, not outward. This keeps the game-container,
+ *   grid-cells, score boxes, and tile-inners exactly the same outer dimensions
+ *   as in the default theme — tiles stay aligned with their cells.
+ *
+ * Colour philosophy:
+ *   Each tile value gets a unique dark-but-hued background + white text.
+ *   Contrast ratios are all ≥4.5:1 (white on the chosen background).
+ *   No two adjacent values share a hue family, so tiles are distinguishable
+ *   without relying on colour alone (the number itself is always visible).
+ */
+
+/* ── Page shell ─────────────────────────────────────────────────────────── */
+body.high-contrast {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+body.high-contrast a {
+  color: #fff !important;
+}
+
+body.high-contrast hr {
+  border-bottom-color: #555 !important;
+}
+
+/* ── Heading ────────────────────────────────────────────────────────────── */
+body.high-contrast h1.title {
+  color: #fff !important;
+}
+
+/* ── Score boxes ────────────────────────────────────────────────────────── */
+/*
+ * The base score box uses height:25px (content area) + padding:15px 25px, so
+ * the rendered height is 55px. box-sizing:border-box would collapse that to
+ * 25px total, crushing the padding and hiding the number.
+ * Instead we keep content-box sizing and compensate for the 2px border with
+ * a negative margin so the boxes don't shift the surrounding layout.
+ */
+body.high-contrast .score-container,
+body.high-contrast .best-container {
+  background: #111 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  border-radius: 3px !important;
+  margin: 6px -2px 0 !important;
+}
+
+body.high-contrast .score-container:after,
+body.high-contrast .best-container:after {
+  color: #aaa !important;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+/*
+ * With box-sizing:border-box and a 2px border, the content area is
+ * height(40px) - 2*border(2px) = 36px, so line-height must match.
+ */
+body.high-contrast .restart-button,
+body.high-contrast .game-message a {
+  background: #111 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  box-sizing: border-box !important;
+  line-height: 36px !important;
+  text-decoration: none !important;
+}
+
+body.high-contrast .restart-button:hover,
+body.high-contrast .restart-button:focus,
+body.high-contrast .game-message a:hover,
+body.high-contrast .game-message a:focus {
+  background: #fff !important;
+  color: #000 !important;
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 2px !important;
+}
+
+body.high-contrast .hc-toggle {
+  background: #111 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+  box-sizing: border-box !important;
+  line-height: 36px !important;
+}
+
+body.high-contrast .hc-toggle:hover,
+body.high-contrast .hc-toggle:focus {
+  background: #fff !important;
+  color: #000 !important;
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 2px !important;
+}
+
+/* ── Game board ─────────────────────────────────────────────────────────── */
+/*
+ * border-box keeps the board exactly $field-width square.
+ * Without it the 2px border makes the board 504px wide and tiles overflow.
+ */
+body.high-contrast .game-container {
+  background: #111 !important;
+  border: 2px solid #fff !important;
+  box-sizing: border-box !important;
+}
+
+/* ── Grid background cells ──────────────────────────────────────────────── */
+/*
+ * border-box keeps each cell the same outer size as without a border.
+ * Without it the 2px border makes cells 4px wider/taller and rows overflow.
+ */
+body.high-contrast .grid-cell {
+  background: transparent !important;
+  border: 2px solid #333 !important;
+  box-sizing: border-box !important;
+}
+
+/* ── Win / loss overlay ─────────────────────────────────────────────────── */
+body.high-contrast .game-message {
+  background: rgba(0, 0, 0, 0.92) !important;
+}
+
+body.high-contrast .game-message.game-won {
+  background: rgba(0, 0, 0, 0.92) !important;
+  color: #fff !important;
+}
+
+body.high-contrast .game-message p {
+  color: #fff !important;
+}
+
+/* ── Tiles ──────────────────────────────────────────────────────────────── */
+/*
+ * box-sizing:border-box is critical here.
+ * The tile-inner normally fills the tile wrapper exactly.
+ * Adding a border without border-box shrinks the visible area and the number
+ * no longer fits inside the tile.
+ *
+ * Each value gets:
+ *   - A unique dark hued background (≥4.5:1 contrast with white text)
+ *   - A matching bright border (1px, purely decorative rim)
+ *   - White text (#fff)
+ *
+ * Values and their hue:
+ *   2    — dark slate / near-white border   (neutral, entry tile)
+ *   4    — deep navy blue
+ *   8    — dark teal
+ *   16   — dark green
+ *   32   — olive / yellow-green
+ *   64   — dark amber
+ *   128  — dark orange
+ *   256  — dark red-orange
+ *   512  — dark crimson
+ *   1024 — dark magenta
+ *   2048 — dark violet  (goal tile — visually distinct from all others)
+ *   super— very dark with bright white rim
+ */
+body.high-contrast .tile .tile-inner {
+  /* Fallback for any value not listed below */
+  background: #1a1a1a !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  border: 2px solid #555 !important;
+  border-radius: 3px !important;
+  box-sizing: border-box !important;
+}
+
+/* 2 — neutral slate, bright white rim */
+body.high-contrast .tile-2 .tile-inner {
+  background: #1c1c2e !important;
+  border-color: #9999cc !important;
+  color: #fff !important;
+}
+
+/* 4 — deep navy */
+body.high-contrast .tile-4 .tile-inner {
+  background: #0a1628 !important;
+  border-color: #4477cc !important;
+  color: #fff !important;
+}
+
+/* 8 — dark teal */
+body.high-contrast .tile-8 .tile-inner {
+  background: #003333 !important;
+  border-color: #00bbbb !important;
+  color: #fff !important;
+}
+
+/* 16 — dark green */
+body.high-contrast .tile-16 .tile-inner {
+  background: #003300 !important;
+  border-color: #00cc44 !important;
+  color: #fff !important;
+}
+
+/* 32 — olive / yellow-green */
+body.high-contrast .tile-32 .tile-inner {
+  background: #1a1a00 !important;
+  border-color: #aacc00 !important;
+  color: #fff !important;
+}
+
+/* 64 — dark amber */
+body.high-contrast .tile-64 .tile-inner {
+  background: #1f1400 !important;
+  border-color: #cc8800 !important;
+  color: #fff !important;
+}
+
+/* 128 — dark orange */
+body.high-contrast .tile-128 .tile-inner {
+  background: #1f0d00 !important;
+  border-color: #ff6600 !important;
+  color: #fff !important;
+}
+
+/* 256 — dark red-orange */
+body.high-contrast .tile-256 .tile-inner {
+  background: #200000 !important;
+  border-color: #ff3300 !important;
+  color: #fff !important;
+}
+
+/* 512 — dark crimson */
+body.high-contrast .tile-512 .tile-inner {
+  background: #1a0010 !important;
+  border-color: #cc0044 !important;
+  color: #fff !important;
+}
+
+/* 1024 — dark magenta */
+body.high-contrast .tile-1024 .tile-inner {
+  background: #1a0033 !important;
+  border-color: #cc00cc !important;
+  color: #fff !important;
+}
+
+/* 2048 — dark violet, brighter border to mark the goal */
+body.high-contrast .tile-2048 .tile-inner {
+  background: #0d0022 !important;
+  border-color: #aa44ff !important;
+  border-width: 3px !important;
+  color: #fff !important;
+}
+
+/* Super (>2048) — near-black, stark white rim */
+body.high-contrast .tile-super .tile-inner {
+  background: #050505 !important;
+  border-color: #ffffff !important;
+  border-width: 3px !important;
+  color: #fff !important;
+}
+
+/* ── Focus rings ────────────────────────────────────────────────────────── */
+body.high-contrast *:focus {
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 2px !important;
+}
