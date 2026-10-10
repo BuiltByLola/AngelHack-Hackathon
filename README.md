@@ -1,2 +1,10 @@
 # 2048 for all
-2048 is a classic browser puzzle game where players slide tiles to reach the number 2048. This update adds a comprehensive accessibility pass to the original codebase. Screen readers now hear every tile move, merge, score change, and game result through ARIA live regions. All buttons are keyboard-focusable and activatable with Enter or Space. A built-in high contrast mode gives each of the 11 tile values a unique dark hued background with white text, all meeting WCAG AA contrast standards. The preference persists across sessions. No frameworks were added — just vanilla HTML, CSS, and JavaScript.
+2048 is a classic browser puzzle game where players slide tiles to 
+reach the number 2048. This update adds a comprehensive accessibility 
+pass to the original codebase. Screen readers now hear every tile 
+move, merge, score change, and game result through ARIA live regions. 
+All buttons are keyboard-focusable and activatable with Enter or 
+Space. A built-in high contrast mode gives each of the 11 tile values 
+a unique dark hued background with white text, all meeting WCAG AA 
+contrast standards. The preference persists across sessions. No 
+frameworks were added — just vanilla HTML, CSS, and JavaScript.
